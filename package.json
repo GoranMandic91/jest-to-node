@@ -1,0 +1,29 @@
+{
+  "name": "jest-to-node",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Migrate Jest tests to Node's native test runner.",
+  "main": "dist/index.js",
+  "bin": {
+    "jest-to-node": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "Goran Mandić",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/generator": "^7.24.4",
+    "@babel/parser": "^7.24.4",
+    "@babel/preset-typescript": "^7.24.1",
+    "@babel/traverse": "^7.24.1",
+    "@babel/types": "^7.24.0",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^20.12.7"
+  },
+  "devDependencies": {
+    "typescript": "5.4.5"
+  }
+}
