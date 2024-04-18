@@ -31,7 +31,7 @@ const imports = [
 export const convertFile = async (code: string) => {
   const ast = parse(code, {
     sourceType: 'module',
-    plugins: ['typescript'],
+    plugins: ['typescript', 'importAssertions'],
   });
 
   let hasAssertImport = false;
@@ -141,6 +141,7 @@ export const convertFile = async (code: string) => {
             path.replaceWith(newExpression);
             break;
           }
+          case 'toBeCalledTimes':
           case 'toHaveBeenCalledTimes': {
             const assertExpression = toHaveBeenCalledTimes(path);
             path.replaceWith(assertExpression);
@@ -151,6 +152,7 @@ export const convertFile = async (code: string) => {
             path.replaceWith(newExpression);
             break;
           }
+          case 'toBeCalledWith':
           case 'toHaveBeenCalledWith': {
             const newExpression = toHaveBeenCalledWith(path);
             path.replaceWith(newExpression);
