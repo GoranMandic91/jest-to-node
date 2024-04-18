@@ -7,6 +7,7 @@ import { toEqual } from './helpers/toEqual.js';
 import { toHaveBeenCalledTimes } from './helpers/toHaveBeenCalledTimes.js';
 import { toHaveBeenCalledWith } from './helpers/toHaveBeenCalledWith.js';
 import { toBe } from './helpers/toBe.js';
+import { toMatchObject } from './helpers/toMatchObject.js';
 
 export const convertFile = async (code: string) => {
   const ast = parse(code, {
@@ -63,7 +64,15 @@ export const convertFile = async (code: string) => {
             path.replaceWith(newExpression);
             break;
           }
+          case 'toMatchObject': {
+            const newExpression = toMatchObject(path);
+            path.replaceWith(newExpression);
+            break;
+          }
           default:
+            console.log(
+              `Unhandled jest helper: ${path.node.callee.property.name}`
+            );
             break;
         }
       }
