@@ -25,7 +25,7 @@ export const walkDirectory = async (
       const newFilePath = path.join(output, relativePath);
       await fs.mkdir(path.dirname(newFilePath), { recursive: true });
       await fs.writeFile(newFilePath, code, 'utf8');
-      console.log(`Copied: ${newFilePath}`);
+      console.log('\x1b[36m', `Copied: ${newFilePath}`);
     }
   }
 };

@@ -185,6 +185,7 @@ export const convertFile = async (code: string) => {
           }
           default:
             console.log(
+              '\x1b[31m',
               `Unhandled jest helper: ${path.node.callee.property.name}`
             );
             break;

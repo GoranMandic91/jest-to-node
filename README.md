@@ -1,3 +1,11 @@
+## Usage
+
+```bash
+npx jest-to-node path/to/jest/tests path/to/output
+```
+
+## Local setup
+
 ### Step 1: Local Build
 
 First, compile your TypeScript code to JavaScript using your build script:

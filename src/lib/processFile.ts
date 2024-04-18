@@ -23,5 +23,5 @@ export const processFile = async (
   const formattedCode = await formatCode(transformedCode);
   // Write the transformed file
   await fs.writeFile(newFilePath, formattedCode, 'utf8');
-  console.log(`Processed: ${newFilePath}`);
+  console.log('\x1b[32m', `Processed: ${newFilePath}`);
 };
