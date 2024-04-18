@@ -7,6 +7,14 @@
   "bin": {
     "jest-to-node": "./dist/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoranMandic91/jest-to-node"
+  },
+  "keywords": [
+    "jest",
+    "node"
+  ],
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build"
