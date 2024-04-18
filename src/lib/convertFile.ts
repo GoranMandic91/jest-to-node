@@ -18,6 +18,13 @@ import { toBeTruthy } from './helpers/toBeTruthy.js';
 import { toMatch } from './helpers/toMatch.js';
 import { toHaveLength } from './helpers/toHaveLength.js';
 import { toHaveBeenCalled } from './helpers/toHaveBeenCalled.js';
+import { nthCalledWith } from './helpers/nthCalledWith.js';
+import { toBeGreaterThan } from './helpers/toBeGreaterThan.js';
+import { toBeLessThanOrEqual } from './helpers/toBeLessThanOrEqual.js';
+import { toContain } from './helpers/toContain.js';
+import { toHaveBeenLastCalledWith } from './helpers/toHaveBeenLastCalledWith.js';
+import { toHaveProperty } from './helpers/toHaveProperty.js';
+import { toStrictEqual } from './helpers/toStrictEqual.js';
 
 const imports = [
   'describe',
@@ -101,6 +108,11 @@ export const convertFile = async (code: string) => {
         path.node.callee.object.callee?.name === 'expect'
       ) {
         switch (path.node.callee.property.name) {
+          case 'nthCalledWith': {
+            const newExpression = nthCalledWith(path);
+            path.replaceWith(newExpression);
+            break;
+          }
           case 'toBe': {
             const newExpression = toBe(path);
             path.replaceWith(newExpression);
@@ -116,8 +128,18 @@ export const convertFile = async (code: string) => {
             path.replaceWith(newExpression);
             break;
           }
+          case 'toBeGreaterThan': {
+            const newExpression = toBeGreaterThan(path);
+            path.replaceWith(newExpression);
+            break;
+          }
           case 'toBeInstanceOf': {
             const newExpression = toBeInstanceOf(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toBeLessThanOrEqual': {
+            const newExpression = toBeLessThanOrEqual(path);
             path.replaceWith(newExpression);
             break;
           }
@@ -133,6 +155,11 @@ export const convertFile = async (code: string) => {
           }
           case 'toBeUndefined': {
             const newExpression = toBeUndefined(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toContain': {
+            const newExpression = toContain(path);
             path.replaceWith(newExpression);
             break;
           }
@@ -158,6 +185,11 @@ export const convertFile = async (code: string) => {
             path.replaceWith(newExpression);
             break;
           }
+          case 'toHaveBeenLastCalledWith': {
+            const newExpression = toHaveBeenLastCalledWith(path);
+            path.replaceWith(newExpression);
+            break;
+          }
           case 'toHaveBeenNthCalledWith': {
             const newExpression = toHaveBeenCalledWith(path);
             path.replaceWith(newExpression);
@@ -168,6 +200,11 @@ export const convertFile = async (code: string) => {
             path.replaceWith(newExpression);
             break;
           }
+          case 'toHaveProperty': {
+            const newExpression = toHaveProperty(path);
+            path.replaceWith(newExpression);
+            break;
+          }
           case 'toMatch': {
             const newExpression = toMatch(path);
             path.replaceWith(newExpression);
@@ -175,6 +212,11 @@ export const convertFile = async (code: string) => {
           }
           case 'toMatchObject': {
             const newExpression = toMatchObject(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toStrictEqual': {
+            const newExpression = toStrictEqual(path);
             path.replaceWith(newExpression);
             break;
           }
