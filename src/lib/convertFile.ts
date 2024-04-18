@@ -6,6 +6,7 @@ import generate from '@babel/generator';
 import { toEqual } from './helpers/toEqual.js';
 import { toHaveBeenCalledTimes } from './helpers/toHaveBeenCalledTimes.js';
 import { toHaveBeenCalledWith } from './helpers/toHaveBeenCalledWith.js';
+import { toBe } from './helpers/toBe.js';
 
 export const convertFile = async (code: string) => {
   const ast = parse(code, {
@@ -17,10 +18,10 @@ export const convertFile = async (code: string) => {
 
   traverse.default(ast, {
     ImportDeclaration(path: any) {
-      if (path.node.source.value.includes('jest')) {
+      if (path.node?.source.value.includes('jest')) {
         path.remove();
       }
-      if (path.node.source.value === 'node:assert') {
+      if (path.node?.source.value === 'node:assert') {
         hasAssertImport = true;
       }
     },
@@ -42,6 +43,11 @@ export const convertFile = async (code: string) => {
         path.node.callee.object.callee?.name === 'expect'
       ) {
         switch (path.node.callee.property.name) {
+          case 'toBe': {
+            const newExpression = toBe(path);
+            path.replaceWith(newExpression);
+            break;
+          }
           case 'toEqual': {
             const newExpression = toEqual(path);
             path.replaceWith(newExpression);
