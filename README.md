@@ -12,7 +12,7 @@ Before you publish the package, you can use npm link to simulate installing your
 
 - Link your package globally:
 
-  1. Navigate to your project directory (where your package.json is located) and run:
+  Navigate to your project directory (where your package.json is located) and run:
 
   ```bash
    npm link
@@ -20,12 +20,12 @@ Before you publish the package, you can use npm link to simulate installing your
 
   This command makes your CLI tool available globally on your system as if it were installed via npm.
 
-  2. Test the command:
+- Test the command:
 
   You can now run your tool from anywhere using the command name defined in the bin section of your package.json. For example:
 
   ```bash
-  test-migrator path/to/jest/tests path/to/output
+  jest-to-node path/to/jest/tests path/to/output
   ```
 
   Replace path/to/jest/tests and path/to/output with actual paths on your local machine where you have some test files ready to be transformed.
