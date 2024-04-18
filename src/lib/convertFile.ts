@@ -19,6 +19,15 @@ import { toMatch } from './helpers/toMatch.js';
 import { toHaveLength } from './helpers/toHaveLength.js';
 import { toHaveBeenCalled } from './helpers/toHaveBeenCalled.js';
 
+const imports = [
+  'describe',
+  'it',
+  'beforeEach',
+  'afterEach',
+  'beforeAll',
+  'afterAll',
+];
+
 export const convertFile = async (code: string) => {
   const ast = parse(code, {
     sourceType: 'module',
@@ -26,6 +35,14 @@ export const convertFile = async (code: string) => {
   });
 
   let hasAssertImport = false;
+  let uses: Record<string, boolean> = {
+    describe: false,
+    it: false,
+    after: false,
+    afterEach: false,
+    before: false,
+    beforeEach: false,
+  };
 
   traverse.default(ast, {
     ImportDeclaration(path: any) {
@@ -38,16 +55,46 @@ export const convertFile = async (code: string) => {
     },
     Program: {
       exit(path: any) {
+        //import { describe, it, after, before } from 'node:test';
+        const specifiers = [];
+        for (const key in uses) {
+          if (uses[key]) {
+            specifiers.push(
+              t.importSpecifier(t.identifier(key), t.identifier(key))
+            );
+          }
+        }
+        if (specifiers.length) {
+          const importDeclaration = t.importDeclaration(
+            specifiers,
+            t.stringLiteral('node:test')
+          );
+          ast.program.body.unshift(importDeclaration);
+        }
+
+        //import assert from 'node:assert/strict';
         if (!hasAssertImport) {
           const assertImportDeclaration = t.importDeclaration(
-            [t.importNamespaceSpecifier(t.identifier('assert'))],
-            t.stringLiteral('node:assert')
+            [t.importDefaultSpecifier(t.identifier('assert'))],
+            t.stringLiteral('node:assert/strict')
           );
           path.node.body.unshift(assertImportDeclaration);
         }
       },
     },
     CallExpression(path: any) {
+      // handle needed imports
+      if (imports.includes(path.node.callee.name)) {
+        if (['beforeAll', 'afterAll'].includes(path.node.callee.name)) {
+          const name = path.node.callee.name.slice(0, -3);
+          uses[name] = true;
+          path.node.callee.name = name;
+        } else {
+          uses[path.node.callee.name] = true;
+        }
+      }
+
+      // handle expects
       if (
         path.node.callee.object &&
         path.node.callee.property &&
