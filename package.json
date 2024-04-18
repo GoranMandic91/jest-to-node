@@ -21,7 +21,8 @@
     "@babel/traverse": "^7.24.1",
     "@babel/types": "^7.24.0",
     "@types/babel__core": "^7.20.5",
-    "@types/node": "^20.12.7"
+    "@types/node": "^20.12.7",
+    "prettier": "^3.2.5"
   },
   "devDependencies": {
     "typescript": "5.4.5"
