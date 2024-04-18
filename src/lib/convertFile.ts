@@ -64,5 +64,5 @@ export const convertFile = async (code: string) => {
     },
   });
 
-  return generate.default(ast).code;
+  return generate.default(ast, { retainLines: true }).code;
 };

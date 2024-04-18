@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs/promises';
 import { convertFile } from './convertFile.js';
+import { formatCode } from './formatCode.js';
 
 export const processFile = async (
   inputRoot: string,
@@ -19,7 +20,8 @@ export const processFile = async (
   // Ensure the directory exists
   await fs.mkdir(path.dirname(newFilePath), { recursive: true });
 
+  const formattedCode = await formatCode(transformedCode);
   // Write the transformed file
-  await fs.writeFile(newFilePath, transformedCode, 'utf8');
+  await fs.writeFile(newFilePath, formattedCode, 'utf8');
   console.log(`Processed: ${newFilePath}`);
 };
