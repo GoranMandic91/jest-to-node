@@ -8,6 +8,16 @@ import { toHaveBeenCalledTimes } from './helpers/toHaveBeenCalledTimes.js';
 import { toHaveBeenCalledWith } from './helpers/toHaveBeenCalledWith.js';
 import { toBe } from './helpers/toBe.js';
 import { toMatchObject } from './helpers/toMatchObject.js';
+import { toBeNull } from './helpers/toBeNull.js';
+import { toBeUndefined } from './helpers/toBeUndefined.js';
+import { toThrow } from './helpers/toThrow.js';
+import { toBeDefined } from './helpers/toBeDefined.js';
+import { toBeFalsy } from './helpers/toBeFalsy.js';
+import { toBeInstanceOf } from './helpers/toBeInstanceOf.js';
+import { toBeTruthy } from './helpers/toBeTruthy.js';
+import { toMatch } from './helpers/toMatch.js';
+import { toHaveLength } from './helpers/toHaveLength.js';
+import { toHaveBeenCalled } from './helpers/toHaveBeenCalled.js';
 
 export const convertFile = async (code: string) => {
   const ast = parse(code, {
@@ -49,6 +59,36 @@ export const convertFile = async (code: string) => {
             path.replaceWith(newExpression);
             break;
           }
+          case 'toBeDefined': {
+            const newExpression = toBeDefined(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toBeFalsy': {
+            const newExpression = toBeFalsy(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toBeInstanceOf': {
+            const newExpression = toBeInstanceOf(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toBeNull': {
+            const newExpression = toBeNull(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toBeTruthy': {
+            const newExpression = toBeTruthy(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toBeUndefined': {
+            const newExpression = toBeUndefined(path);
+            path.replaceWith(newExpression);
+            break;
+          }
           case 'toEqual': {
             const newExpression = toEqual(path);
             path.replaceWith(newExpression);
@@ -59,13 +99,38 @@ export const convertFile = async (code: string) => {
             path.replaceWith(assertExpression);
             break;
           }
+          case 'toHaveBeenCalled': {
+            const newExpression = toHaveBeenCalled(path);
+            path.replaceWith(newExpression);
+            break;
+          }
           case 'toHaveBeenCalledWith': {
             const newExpression = toHaveBeenCalledWith(path);
             path.replaceWith(newExpression);
             break;
           }
+          case 'toHaveBeenNthCalledWith': {
+            const newExpression = toHaveBeenCalledWith(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toHaveLength': {
+            const newExpression = toHaveLength(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toMatch': {
+            const newExpression = toMatch(path);
+            path.replaceWith(newExpression);
+            break;
+          }
           case 'toMatchObject': {
             const newExpression = toMatchObject(path);
+            path.replaceWith(newExpression);
+            break;
+          }
+          case 'toThrow': {
+            const newExpression = toThrow(path);
             path.replaceWith(newExpression);
             break;
           }
